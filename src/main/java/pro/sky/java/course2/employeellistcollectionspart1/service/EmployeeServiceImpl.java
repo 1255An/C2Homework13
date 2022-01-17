@@ -6,12 +6,11 @@ import pro.sky.java.course2.employeellistcollectionspart1.exceptions.EmployeeExi
 import pro.sky.java.course2.employeellistcollectionspart1.exceptions.EmployeeNotFoundException;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-    Map<String, Employee> employees;
+    Map<String, Employee> employees ;
 
     public EmployeeServiceImpl() {
         this.employees = new HashMap<>();
