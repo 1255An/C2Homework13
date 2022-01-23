@@ -1,6 +1,6 @@
 package pro.sky.java.course2.employeellistcollectionspart1;
 
-public interface DataForTest {
+public class DataForDepartmentTest {
     String FIRST_NAME_1 = "Dmitriy";
     String LAST_NAME_1 = "Dmitriev";
     Integer DEPARTMENT_ID_1 = 1;
