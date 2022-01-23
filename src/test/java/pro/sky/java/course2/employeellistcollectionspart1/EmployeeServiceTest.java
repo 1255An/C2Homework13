@@ -1,17 +1,18 @@
 package pro.sky.java.course2.employeellistcollectionspart1;
 
+import net.bytebuddy.pool.TypePool;
 import org.apache.commons.collections4.CollectionUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pro.sky.java.course2.employeellistcollectionspart1.data.Employee;
+import pro.sky.java.course2.employeellistcollectionspart1.exceptions.EmployeeExistException;
+import pro.sky.java.course2.employeellistcollectionspart1.exceptions.EmployeeNotFoundException;
 import pro.sky.java.course2.employeellistcollectionspart1.service.EmployeeService;
 import pro.sky.java.course2.employeellistcollectionspart1.service.EmployeeServiceImpl;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -50,16 +51,41 @@ public class EmployeeServiceTest {
 
     @Test
     public void addEmployeeTestIfEmployeeAlreadyExist() {
-        assertThrows(IllegalArgumentException.class, () -> out.getAllEmployees());
+        assertThrows(EmployeeExistException.class, () -> out.addEmployee(employee1));
     }
-
 
     @Test
     public void removeEmployeeTest() {
         Collection<Employee> expected = out.getAllEmployees();
-
         expected.remove(employee3);
-        assertFalse (expected.contains(employee3));
+        Collection<Employee> actual = new ArrayList<>();
+        actual.add(employee1);
+        actual.add(employee2);
+        assertTrue(CollectionUtils.isEqualCollection(expected, actual));
+    }
 
+    @Test
+    public void removeEmployeeTestIfItNotFound() {
+        Collection<Employee> expected = out.getAllEmployees();
+        expected.remove(employee3);
+        assertThrows(EmployeeNotFoundException.class, () -> out.removeEmployee(employee3));
+    }
+
+    @Test
+    public void findEmployeeTest() {
+        Employee result = out.findEmployee("Zoya", "Zoykina");
+        assertEquals(employee2, result);
+    }
+
+    @Test
+    public void findEmployeeTestIfItNotFound() {
+        assertThrows(EmployeeNotFoundException.class,
+                () -> out.findEmployee("Vasya", "Vasilev"));
+    }
+
+    @Test
+    public void getAllEmployeesTestNotNull() {
+        Collection<Employee> expected = out.getAllEmployees();
+        assertNotNull(expected);
     }
 }

@@ -14,7 +14,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         this.employeeService = employeeService;
     }
 
-    private final EmployeeService employeeService;
+    private final EmployeeService employeeService ;
 
 
     public Employee getMaxSalaryEmployeeInDepartment(Integer departmentId) {
@@ -37,10 +37,9 @@ public class DepartmentServiceImpl implements DepartmentService {
                 .collect(Collectors.toList());
     }
 
-    public Collection<Employee> getAllEmployeesInDepartment() {
+    public Map<Integer, List <Employee>> getAllEmployeesDividedByDepartment() {
         return employeeService.getAllEmployees().stream()
-                .sorted(Comparator.comparing(Employee::getDepartmentId))
-                .collect(Collectors.toList());
+                .collect(Collectors.groupingBy(Employee::getDepartmentId));
 
     }
 
